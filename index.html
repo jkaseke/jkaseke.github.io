@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Leaflet App</title>
+
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+</body>
+
+</html>
+
+<!-- leaflet js -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="./data/point.js"></script>
+
+<script>
+    // Map initialization
+
+    // GoogleHybrid
+    var map = L.map('map').setView([24.434310, 28.702439], 3.2);
+
+    googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+googleHybrid.addTo(map)
+
+// GoogleStreets
+var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+// googleStreets.addTo(map)
+
+// OSM Bright
+var OSMBright = L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png', {
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+});
+// OSMBright.addTo(map)
+
+//Marker
+var myIcon = L.icon({
+    iconUrl: 'img/F1Header.png',
+    iconSize: [450, 200],
+});
+
+L.marker([71.8, 28.702439], {icon: myIcon}).addTo(map);
+
+// Layer controller
+var baseMaps = {
+    "Google Hybrid": googleHybrid,
+    "Google Streets": googleStreets,
+    "OSM Bright": OSMBright,
+};
+
+var overlayMaps = {
+    
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+/*=========================================================
+|   |   |   | GEOJSON
+=========================================================*/
+
+L.geoJSON(pointJSON, {
+    onEachFeature: function(feature, layer) {
+        layer.bindPopup(("<b><b>" 
+            + feature.properties.name+"</br>")
+            + feature.properties.location+"</br>"
+            + feature.properties.country+"</br>"
+            + "<a href='https://en.wikipedia.org/wiki/"+feature.properties.name+" 'target='_blank''> Circuit Wiki</a>"
+            );
+    }
+}).addTo(map)
+
+
+
+</script>
