@@ -30,7 +30,7 @@
 
 <!-- leaflet js -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="./data/point.js"></script>
+<script src="./point.js"></script>
 
 <script>
     // Map initialization
@@ -83,9 +83,16 @@ L.control.layers(baseMaps, overlayMaps).addTo(map);
 /*=========================================================
 |   |   |   | GEOJSON
 =========================================================*/
+var CheckeredFlagIcon = L.icon({
+    iconUrl: 'img/CheckeredFlag.png',
+    iconSize:     [15, 25], // size of the icon
+});
 
 L.geoJSON(pointJSON, {
-    onEachFeature: function(feature, layer) {
+    pointToLayer: function(feature, latlng) {
+        return L.marker(latlng, {icon: CheckeredFlagIcon});
+    },
+    onEachFeature: function (feature, layer) {
         layer.bindPopup(("<b><b>" 
             + feature.properties.name+"</br>")
             + feature.properties.location+"</br>"
@@ -93,8 +100,7 @@ L.geoJSON(pointJSON, {
             + "<a href='https://en.wikipedia.org/wiki/"+feature.properties.name+" 'target='_blank''> Circuit Wiki</a>"
             );
     }
-}).addTo(map)
-
+}).addTo(map);
 
 
 </script>
