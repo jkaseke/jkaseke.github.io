@@ -8,6 +8,10 @@
 
     <!-- leaflet css -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="./data/L.Control.BetterScale.css" />
+    <link rel="stylesheet" type="text/css" href="./data/L.Control.ZoomBar.css"/>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/w8r/Leaflet.Bookmarks/master/dist/leaflet.bookmarks.css">
+    <link rel="stylesheet" type="text/css" href="./data/Leaflet.LinearMeasurement.css"/>
 
     <style>
 
@@ -24,6 +28,7 @@
 
 <body>
     <div id="map"></div>
+    
 </body>
 
 </html>
@@ -31,12 +36,16 @@
 <!-- leaflet js -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="./data/point.js"></script>
+<script src="./data/L.Control.BetterScale.js"></script>
+<script type="text/javascript" src="./data/L.Control.ZoomBar.js"></script>
+<script type="text/javascript" src="https://rawgit.com/w8r/Leaflet.Bookmarks/master/dist/L.Control.Bookmarks.js"></script>
+<script type="text/javascript" src="./data/Leaflet.LinearMeasurement.js"></script>
 
 <script>
     // Map initialization
 
     // GoogleHybrid
-    var map = L.map('map').setView([24.434310, 28.702439], 3.2);
+    var map = L.map('map', {zoomControl: false}).setView([24.434310, 28.702439], 3.2);
 
     googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
     maxZoom: 20,
@@ -102,5 +111,16 @@ L.geoJSON(pointJSON, {
     }
 }).addTo(map);
 
+L.control.betterscale().addTo(map);
+
+var zoom_bar = new L.Control.ZoomBar({position: 'topleft'}).addTo(map);
+
+var control = new L.Control.Bookmarks().addTo(map);
+
+map.addControl(new L.Control.LinearMeasurement({
+        unitSystem: 'metric',
+        color: '#FF0080',
+        type: 'line'
+    }));
 
 </script>
