@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="./data/L.Control.ZoomBar.css"/>
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/w8r/Leaflet.Bookmarks/master/dist/leaflet.bookmarks.css">
     <link rel="stylesheet" type="text/css" href="./data/Leaflet.LinearMeasurement.css"/>
+    <link rel="stylesheet" type="text/css" href="./data/leaflet-control-credits.css"/>
 
     <style>
 
@@ -40,6 +41,7 @@
 <script type="text/javascript" src="./data/L.Control.ZoomBar.js"></script>
 <script type="text/javascript" src="https://rawgit.com/w8r/Leaflet.Bookmarks/master/dist/L.Control.Bookmarks.js"></script>
 <script type="text/javascript" src="./data/Leaflet.LinearMeasurement.js"></script>
+<script type="text/javascript" src="./data/leaflet-control-credits.js"></script>
 
 <script>
     // Map initialization
@@ -122,5 +124,11 @@ map.addControl(new L.Control.LinearMeasurement({
         color: '#FF0080',
         type: 'line'
     }));
+
+var credctrl = L.controlCredits({
+    image: "img/cal.png",
+    link: "https://www.formula1.com/en/racing/2021.html",
+    text: ("<b>2021 Season </br> Schedule</b>")
+    }).addTo(map);    
 
 </script>
